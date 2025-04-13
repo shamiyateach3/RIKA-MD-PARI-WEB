@@ -1,0 +1,123 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>RIKA-MD Pair Web</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      transition: background-image 1s ease-in-out;
+      color: white;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+    .box {
+      background: rgba(0,0,0,0.75);
+      padding: 30px;
+      border-radius: 15px;
+      width: 90%;
+      max-width: 400px;
+    }
+    h1 {
+      margin-bottom: 10px;
+      font-size: 28px;
+      color: #25D366;
+    }
+    input {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border-radius: 10px;
+      border: none;
+      font-size: 16px;
+    }
+    button {
+      background-color: #25D366;
+      border: none;
+      padding: 12px;
+      color: white;
+      font-size: 16px;
+      border-radius: 10px;
+      cursor: pointer;
+      width: 100%;
+    }
+    #result {
+      margin-top: 20px;
+    }
+    #pairCode {
+      margin-top: 10px;
+      font-weight: bold;
+      color: #25D366;
+    }
+    footer {
+      position: absolute;
+      bottom: 10px;
+      text-align: center;
+      width: 100%;
+      font-size: 14px;
+      color: #ccc;
+    }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <h1>RIKA-MD PAIR WEB</h1>
+    <input type="text" id="number" placeholder="Enter your WhatsApp number">
+    <button onclick="generatePair()">Generate Pair Info</button>
+    <div id="result">
+      <canvas id="qrcode"></canvas>
+      <div id="pairCode"></div>
+    </div>
+  </div>
+  <footer>
+    MADE BY SHAMIKA DENUWAN
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+  <script>
+    const pairMap = {
+      "94771234567": "RIKA-1090",
+      "94774561234": "RIKA-2001",
+      "94777112233": "RIKA-3333"
+    };
+    function generatePair() {
+      const number = document.getElementById("number").value.trim();
+      const qrCanvas = document.getElementById("qrcode");
+      const pairDiv = document.getElementById("pairCode");
+
+      if (!number) {
+        alert("Please enter your number");
+        return;
+      }
+      const pairCode = pairMap[number] || "UNKNOWN";
+      const link = "https://wa.me/" + number;
+
+      const qr = new QRious({
+        element: qrCanvas,
+        value: link,
+        size: 200
+      });
+      pairDiv.innerHTML = "Your Pair Code: <br>" + pairCode;
+    }
+
+    const backgrounds = ['https://wallpapers.com/images/hd/toji-fushiguro-holding-sword-xvuhpx5j8mw97m7r.jpg', 'https://wallpapersden.com/image/download/toji-fushiguro-digital-jujutsu-kaisen_bWpsaG2UmZqaraWkpJRmbmdlrWZlbWU.jpg', 'https://wallpapercave.com/wp/wp12556067.jpg'];
+    let bgIndex = 0;
+    function changeBackground() {
+      document.body.style.backgroundImage = `url('${backgrounds[bgIndex]}')`;
+      bgIndex = (bgIndex + 1) % backgrounds.length;
+    }
+    setInterval(changeBackground, 5000);
+    window.onload = changeBackground;
+  </script>
+</body>
+</html>
