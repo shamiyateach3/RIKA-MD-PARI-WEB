@@ -1,0 +1,101 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>RIKA-MD | WhatsApp Bot Pair</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: url('rika-md-bg.jpg') no-repeat center center fixed;
+      background-size: cover;
+      height: 100vh;
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      text-shadow: 1px 1px 3px #000;
+    }
+
+    .container {
+      background: rgba(0, 0, 0, 0.6);
+      padding: 30px;
+      border-radius: 15px;
+      text-align: center;
+      width: 90%;
+      max-width: 400px;
+    }
+
+    h1 {
+      font-size: 2em;
+      margin-bottom: 20px;
+      color: #25D366;
+    }
+
+    input {
+      padding: 12px;
+      width: 100%;
+      margin: 10px 0;
+      border-radius: 10px;
+      border: none;
+      font-size: 16px;
+    }
+
+    button {
+      background-color: #25D366;
+      color: white;
+      padding: 12px;
+      width: 100%;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    #qrcode {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>RIKA-MD</h1>
+    <input type="text" id="phone" placeholder="Enter WhatsApp Number (e.g., 9477xxxxxxx)">
+    <input type="text" id="message" placeholder="Enter Message">
+    <button onclick="sendMessage()">Generate QR + Chat</button>
+    <canvas id="qrcode"></canvas>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+  <script>
+    function sendMessage() {
+      const phone = document.getElementById('phone').value.trim();
+      const message = document.getElementById('message').value.trim();
+
+      if (!phone || !message) {
+        alert("Please enter both phone number and message");
+        return;
+      }
+
+      const encodedMsg = encodeURIComponent(message);
+      const waLink = `https://wa.me/${phone}?text=${encodedMsg}`;
+      window.open(waLink, '_blank');
+
+      const qr = new QRious({
+        element: document.getElementById('qrcode'),
+        value: waLink,
+        size: 200
+      });
+    }
+  </script>
+</body>
+</html>
